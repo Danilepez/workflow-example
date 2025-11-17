@@ -1,0 +1,38 @@
+# Nombre del workflow (opcional, pero recomendado)
+name: Hola Mundo DevOps
+
+# Disparadores (Triggers)
+# Esto hará que corra en cada 'push' a la rama 'main'
+# y también te permite correrlo manualmente desde la pestaña 'Actions'
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Trabajos (Jobs)
+jobs:
+  # Nombre del trabajo (puedes llamarlo como quieras)
+  correr-script-saludo:
+    
+    # La máquina virtual donde correrá (Ubuntu es la más común y barata)
+    runs-on: ubuntu-latest
+
+    # Pasos (Steps)
+    steps:
+      # 1. Clonar tu repositorio en la máquina virtual
+      # Esto es necesario para que el runner pueda "ver" tu script saludo.py
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      # 2. Configurar el entorno de Python
+      # Esto instala Python en la máquina virtual
+      - name: Configurar Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' 
+
+      # 3. Ejecutar tu script de Python
+      # Asumiendo que tu script se llama 'saludo.py'
+      - name: Ejecutar el script de saludo
+        run: python hello.py
